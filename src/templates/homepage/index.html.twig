@@ -1,0 +1,16 @@
+{% extends('base.html.twig') %}
+
+{% block body %}
+    <div>
+        <form action="{{ path('app_images_get') }}" method="GET">
+            <input type="url" name="url" required>
+            <button type="submit">{% trans %} GO {% endtrans %}</button>
+        </form>
+    </div>
+
+    <div id="images-container"></div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/fetch-images.js') }}"></script>
+{% endblock %}

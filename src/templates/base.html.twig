@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% trans %} Image App {% endtrans %}{% endblock %}</title>
+        {% block stylesheets %}
+        {% endblock %}
+
+        <link href="{{ asset('css/loader.css') }}" rel="stylesheet"/>
+    </head>
+    <body>
+        <div class="loader" style="display: none;">
+            <span class="spinner"></span>
+        </div>
+
+        {% block body %}{% endblock %}
+
+        {% block javascripts %}
+        {% endblock %}
+    </body>
+</html>
