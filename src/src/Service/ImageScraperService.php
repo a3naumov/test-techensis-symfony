@@ -37,7 +37,7 @@ class ImageScraperService
 
     private function sanitizeUrl(string $url): string
     {
-        $url = urldecode($url);
+        $url = urldecode(trim($url));
 
         return str_ends_with($url, '/') ? substr($url, 0, -1) : $url;
     }

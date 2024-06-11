@@ -8,8 +8,16 @@ document.querySelector('form').addEventListener('submit', function (e) {
 
     const url = document.querySelector('input[name="url"]').value;
 
-    fetch(this.action + '?url=' + url)
-        .then(response => response.json())
+    fetch(this.action + '?url=' + encodeURIComponent(url))
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    throw new Error(data.detail);
+                });
+            }
+
+            return response.json();
+        })
         .then(data => {
             const container = document.getElementById('images-container');
             container.innerHTML = '';
@@ -54,10 +62,21 @@ document.querySelector('form').addEventListener('submit', function (e) {
                 'Total size: ' + totalSize.toFixed(2) + ' MB',
             ].join('<br>');
             container.appendChild(p);
+        })
+        .catch(error => {
+            console.error(error);
 
+            const container = document.getElementById('images-container');
+            container.innerHTML = '';
+
+            const p = document.createElement('p');
+            p.innerHTML = error;
+            container.appendChild(p);
+        })
+        .finally(() => {
             document.querySelector('input[name="url"]').disabled = false;
             document.querySelector('button').disabled = false;
-
             document.querySelector('.loader').style.display = 'none';
-        });
+        })
+    ;
 });
